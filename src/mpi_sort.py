@@ -15,6 +15,9 @@ if __name__ == "__main__":
     rank = comm.Get_rank()
     size = comm.Get_size()
     status = mpi.Status()
+    if size <= 1:
+        print("Please allocate more machines. The first one acts only like a hub.")
+        exit(1)
 
     if rank == 0:
         result, array = utils.get_array_from_file()
@@ -45,7 +48,7 @@ if __name__ == "__main__":
 
         elapsed = finaltime - starttime
         print("Elapsed sorting time:", elapsed.microseconds, "ms")
-        
+        exit(0)
 
     elif rank > 0:
         data = comm.recv(source=0)
