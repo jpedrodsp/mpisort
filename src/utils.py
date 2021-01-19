@@ -26,7 +26,7 @@ def read_ndarray(filepath) -> (bool, numpy.ndarray):
         array = numpy.fromfile(filepath)
         return True, array
     except Exception as e:
-        print(e)
+        print("Failed to read array.")
         return False, None
         
 
@@ -50,6 +50,7 @@ def get_array_from_file() -> (bool, numpy.ndarray):
     if result == True:
         return True, array
     else:
+        print("Generated new array.")
         array = generate_array(DEFAULT_ARRAY_SIZE)
         write_result = write_ndarray(ARRAY_FILENAME, array)
         if write_result == True:

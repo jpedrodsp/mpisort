@@ -6,7 +6,7 @@ from mpi4py import MPI as mpi
 
 TAG_DATARETURN = 1
 
-def sort_method(array: numpy.ndarray) -> numpy.ndarray:
+def sort_method(array):
     a = numpy.sort(array)
     return a
 
@@ -31,9 +31,9 @@ if __name__ == "__main__":
             # print("Sending part to {}: {}".format(i, part))
             comm.send(part, i, 0)
         datareturns = 0
-        sorted_array: numpy.ndarray = numpy.zeros(0)
+        sorted_array = numpy.zeros(0)
         while datareturns < size - 1:
-            data: numpy.ndarray = comm.recv(tag=TAG_DATARETURN, source=mpi.ANY_SOURCE, status=status)
+            data = comm.recv(tag=TAG_DATARETURN, source=mpi.ANY_SOURCE, status=status)
             if status.Get_source():
                 source = status.Get_source()
                 # print("slave", source, data)
@@ -44,7 +44,7 @@ if __name__ == "__main__":
         finaltime = datetime.now()
 
         elapsed = finaltime - starttime
-        print(elapsed.microseconds, "ms")
+        print("Elapsed sorting time:", elapsed.microseconds, "ms")
         
 
     elif rank > 0:
